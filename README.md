@@ -2,7 +2,7 @@
 
 Bu repo, uydu ve hava görüntülerinden baskın arazi türünü sınıflandırmak için geliştirilen derin öğrenme ve geleneksel makine öğrenmesi tabanlı bir sistemin kodunu içerir.
 
-## 📌 Proje Açıklaması
+## Proje Açıklaması
 
 Bu proje, uydu görüntülerinden **şehir, orman, tarım, plaj, dağ ve çöl** gibi arazi türlerini otomatik olarak sınıflandırmayı amaçlamaktadır. İki farklı yöntem uygulanmış ve karşılaştırılmıştır:
 
