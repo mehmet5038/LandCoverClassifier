@@ -1,11 +1,9 @@
 import os
 from PIL import Image
 
-# 🔁 Kaynak ve hedef klasör yolları
-source_root = "data/sample_ucmerced_tif"  # BURAYI KENDİ YOLUNA GÖRE DÜZENLE
-target_root = "data/sample_ucmerced"
+source = "data/sample_ucmerced_tif"
+target = "data/sample_ucmerced"
 
-# 🌍 Kullanılacak sınıflar
 classes = [
     "agricultural", "airplane", "baseballdiamond", "beach", "buildings", "chaparral",
     "denseresidential", "forest", "freeway", "golfcourse", "harbor", "intersection",
@@ -13,12 +11,11 @@ classes = [
     "runway", "sparseresidential", "storagetanks", "tenniscourt"
 ]
 
-# 📁 Hedef klasörleri oluştur
-os.makedirs(target_root, exist_ok=True)
+os.makedirs(target, exist_ok=True)
 
 for cls in classes:
-    src_dir = os.path.join(source_root, cls)
-    tgt_dir = os.path.join(target_root, cls)
+    src_dir = os.path.join(source, cls)
+    tgt_dir = os.path.join(target, cls)
     os.makedirs(tgt_dir, exist_ok=True)
 
     count = 0
@@ -31,7 +28,7 @@ for cls in classes:
             img.save(out_path, "JPEG")
             count += 1
 
-            if count >= 20:  # Her sınıftan sadece 20 örnek
+            if count >= 15:
                 break
-
+            
 print("Dönüştürme tamamlandı.")
