@@ -1,3 +1,3 @@
 .venv
 data/sample_ucmerced_tif
-data/convert_tif_to_jpg
+data/convert_tif_to_jpg.py
