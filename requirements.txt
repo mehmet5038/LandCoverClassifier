@@ -1,0 +1,7 @@
+tensorflow>=2.10
+numpy
+matplotlib
+pillow
+scipy
+seaborn
+scikit-learn
