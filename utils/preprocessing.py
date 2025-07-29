@@ -1,17 +1,30 @@
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-import matplotlib.pyplot as plt
 
-def get_data_generators(data_directory, image_size=(256, 256), batch_size=16, validation_split=0.15):
-    train_datagen = ImageDataGenerator(
-        rescale=1./255,
-        rotation_range=15,
-        zoom_range=0.2,
-        horizontal_flip=True,
-        brightness_range=[0.7, 1.3],
-        width_shift_range=0.1,
-        height_shift_range=0.1,
-        validation_split=0.15
-    )
+def get_data_generators(data_directory, image_size=(256, 256), batch_size=16, isSkyView=True, validation_split=0.15):
+    if isSkyView:
+        train_datagen = ImageDataGenerator(
+            rescale=1./255,
+            rotation_range=15,
+            zoom_range=0.2,
+            horizontal_flip=True,
+            brightness_range=[0.7, 1.3],
+            width_shift_range=0.1,
+            height_shift_range=0.1,
+            validation_split=validation_split
+        )
+    else:
+        train_datagen = ImageDataGenerator(
+            rescale=1./255,
+            rotation_range=20,
+            zoom_range=0.3,
+            shear_range=10,
+            width_shift_range=0.15,
+            height_shift_range=0.15,
+            channel_shift_range=30,
+            brightness_range=[0.6, 1.4],
+            horizontal_flip=True,
+            validation_split=0.15
+        )
 
     val_datagen = ImageDataGenerator(
         rescale=1./255,
@@ -37,25 +50,3 @@ def get_data_generators(data_directory, image_size=(256, 256), batch_size=16, va
     )
 
     return train_gen, val_gen
-
-def plot_training_history(history):
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
-    
-    ax1.plot(history.history["accuracy"], label="Eğitim Doğruluğu")
-    ax1.plot(history.history["val_accuracy"], label="Doğrulama Doğruluğu")
-    ax1.set_title("Model Doğruluğu")
-    ax1.set_xlabel("Epoch")
-    ax1.set_ylabel("Doğruluk")
-    ax1.legend()
-    ax1.grid(True)
-    
-    ax2.plot(history.history["loss"], label="Eğitim Kaybı")
-    ax2.plot(history.history["val_loss"], label="Doğrulama Kaybı")
-    ax2.set_title("Model Kaybı")
-    ax2.set_xlabel("Epoch")
-    ax2.set_ylabel("Kayıp")
-    ax2.legend()
-    ax2.grid(True)
-    
-    plt.tight_layout()
-    plt.show()
