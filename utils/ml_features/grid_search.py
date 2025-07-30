@@ -5,6 +5,8 @@ import time
 import numpy as np
 
 def grid_search(model_class, param_grid, X, y, cv=5, scoring="accuracy"):
+    total_time = 0
+
     best_score = -np.inf
     best_model = None
     best_params = None
@@ -13,7 +15,7 @@ def grid_search(model_class, param_grid, X, y, cv=5, scoring="accuracy"):
     values = list(param_grid.values())
     all_combos = list(product(*values))
 
-    print("Denenecek hiperparametre kombinasyon sayısı: ", len(all_combos))
+    print("Denenecek hiperparametre kombinasyon sayısı:", len(all_combos))
 
     for combo in tqdm(all_combos, desc=f"{model_class.__class__.__name__} Grid Search"):
         params = dict(zip(keys, combo))
@@ -22,10 +24,10 @@ def grid_search(model_class, param_grid, X, y, cv=5, scoring="accuracy"):
         start = time.time()
         scores = cross_val_score(model, X, y, cv=cv, scoring=scoring, n_jobs=-1)
         duration = time.time() - start
-        formatted_time = format_duration(duration)
+        total_time += duration
 
         avg_score = np.mean(scores)
-        print("Parametreler: ", params, " | Skor: ", avg_score, " | Süre: ", formatted_time)
+        print("Parametreler:", params, "| Skor:", avg_score, "| Süre:", format_duration(duration))
 
         if avg_score > best_score:
             best_score = avg_score
@@ -33,7 +35,7 @@ def grid_search(model_class, param_grid, X, y, cv=5, scoring="accuracy"):
             best_params = params
 
     best_model.fit(X, y)
-    return best_model, best_score, best_params
+    return best_model, best_score, best_params, format_duration(total_time)
 
 def format_duration(seconds):
     if seconds < 60:
@@ -42,9 +44,9 @@ def format_duration(seconds):
     elif seconds < 3600:
         minutes = int(seconds // 60)
         secs = int(seconds % 60)
-        return str(minutes) + " dk" + str(secs) + " sn"
+        return str(minutes) + " dk " + str(secs) + " sn"
     else:
         hours = int(seconds // 3600)
         minutes = int((seconds % 3600) // 60)
         secs = int(seconds % 60)
-        return str(hours) + " sa" + str(minutes) + " dk" + str(secs) + " sn"
+        return str(hours) + " sa " + str(minutes) + " dk " + str(secs) + " sn"
