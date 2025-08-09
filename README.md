@@ -11,20 +11,23 @@ Bu proje, uydu görüntülerinden **şehir, orman, tarım, plaj, dağ ve çöl**
 
 Bu proje, **TOBB ETÜ Bilgisayar Mühendisliği** bölümü, **YAP 470** dersi içindir.
 
-### Yöntem 1 | Convolutional Neural Network (CNN) ile Arazi Türü Sınıflandırması:
+### Yöntem 1 – CNN
 
-Model, piksel değerleri normalize edilmiş ve augmentasyon uygulanmış uydu görüntülerini girdi olarak alır. Ardından konvolüsyonel katmanlar üzerinden öznitelik çıkarımı yaparak her görüntüyü ait olduğu arazi sınıfına göre sınıflandırır.
+**Notebooklar:**
+- `train_cnn_uc_merced.ipynb` – UC Merced veri seti ile CNN eğitimi  
+- `train_cnn_skyview.ipynb` – SkyView veri seti ile CNN eğitimi  
+- `test_cnn.ipynb` – CNN modellerinin test edilmesi, karışıklık matrisi ve metrik analizi
 
-#### Jupyter Notebookları:
+---
 
-- **`train_cnn.ipynb`:** 
-  - CNN modelinin oluşturulup eğitildiği kısımdır.
-  - Eğitim sırasında `ImageDataGenerator` ile veri artırma yapılır.
-  - Eğitim ve doğrulama doğruluğu, kaybı grafikle izlenir.
-  - Erken durdurma (EarlyStopping) ile eğitim kontrol edilir.
-  - Eğitim sonunda model `.keras` formatında kaydedilir.
+### Yöntem 2 – Makine Öğrenmesi
 
-- **`test_model.ipynb`:** 
-  - Eğitilen modelin doğrulama, test verisi üzerindeki başarımını değerlendirir.
-  - Karışıklık matrisi ve sınıf bazlı metrikler (`precision`, `recall`, `F1-score`) hesaplanır.
-  - Rastgele seçilen örnek görseller üzerinde gerçek ve tahmin karşılaştırması yapılır.
+- **Özellikler:** HOG, LBP, HSV histogram, GLCM
+- **Boyut azaltma:** PCA
+- **Modeller:** Random Forest, Gradient Boosting, MLP
+- Grid Search ile hiperparametre optimizasyonu
+
+**Notebooklar:**
+- `train_ml_uc_merced.ipynb` – UC Merced veri seti ile ML eğitimi  
+- `train_ml_skyview.ipynb` – SkyView veri seti ile ML eğitimi  
+- `test_ml.ipynb` – ML modellerinin test edilmesi ve karşılaştırılması
